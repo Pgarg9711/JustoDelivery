@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar color="custom-color">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Dashboard</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce>
+    <ion-card *ngFor="let c of _CARD; let i=index" (click)="onClickThis(i)">
+        <div [ngClass]="c.cssClass"><img [src]="c.img"></div>
+        <ion-card-content text-center>
+            <h2>{{c.cardName}}</h2>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

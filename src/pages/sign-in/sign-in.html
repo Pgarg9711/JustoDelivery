@@ -1,0 +1,26 @@
+<!--
+  Generated template for the SignInPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content padding no-bounce>
+    <ion-item no-lines class="litem_input" text-center>
+        <img [src]="LOGO" alt="LOGO">
+    </ion-item>
+    <form novalidate [formGroup]="loginForm" (ngSubmit)="onSignIn()">
+        <ion-item class="litem_input" no-padding>
+            <ion-input class="form-control" formControlName="email" type="email" required placeholder="Email"></ion-input>
+        </ion-item>
+        <p class="lhas-error">{{ showError('email') }}</p>
+
+        <ion-item class="litem_input" no-padding>
+            <ion-input class="form-control" formControlName="password" type="password" required placeholder="Password"></ion-input>
+        </ion-item>
+        <p class="lhas-error">{{ showError('password') }}</p>
+        <button ion-button class="submit-btn" block type="submit" color="primary">Login</button>
+        <ion-item text-center no-padding no-margin no-lines class="transparent_background">
+            <button ion-button clear color="danger" (click)="onForgotPassword()" type="button" text-capitalize><u>Forgot Your Password?</u></button>
+        </ion-item>
+    </form>
+</ion-content>

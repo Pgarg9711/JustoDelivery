@@ -1,0 +1,15 @@
+page-add-receive-in-records {
+  .has-error{
+    margin: -15px 0px 0px 0px;
+    font-size: small;
+    color: #fa0e0e !important;
+    position: absolute;
+  }
+  .litem_input{
+    background-color: transparent;
+    margin:20px 0px 20px 0px;
+    .item-inner{
+      box-shadow:none!important;
+    }
+  }
+}

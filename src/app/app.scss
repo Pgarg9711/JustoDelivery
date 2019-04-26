@@ -1,0 +1,89 @@
+ion-header button{       // Back, Toggle button in Header to BLack color
+  color: #ffffff !important;
+}
+.sidebar_menu_list .item:last-child{   // Removing Border for last Item in Sidebar
+  border-bottom: 0px;
+}
+
+.sidebar_menu_list .sidebar_user_name{
+  padding: 16px;
+}
+.h-300{
+  height: 300px;
+}
+
+.right{
+  float: right;
+}
+
+.toolbar-background{      // Background Color for Header
+  background: color($colors,toolBarColor,basic);
+}
+
+.toolbar-title{       // Color of Heading
+  color: white;
+}
+
+.text-white{
+  color: white;
+}
+
+.transparent_background{
+  background-color: transparent;
+}
+
+.scanner-transparent-body {
+  background: none transparent !important;
+  opacity: 0 !important;
+}
+
+
+// Hiding Loader Background
+ion-loading.transparent {
+  .loading-wrapper {
+    background: transparent;
+    box-shadow: none;
+
+    .spinner-crescent circle {
+      stroke-width: 18px;
+    }
+  }
+}
+
+ion-footer{
+  .item-md{
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .item-md.item-block .item-inner{
+    padding: 0px;
+    margin: 0px;
+  }
+  .footer label, .label-md {
+    padding: 0px;
+    margin: 0px;
+  }
+  .footerBtns{
+    width: 50%;
+    margin: 0px;
+    padding: 0px;
+  }
+}
+
+.label-md {
+  margin: 13px 8px 13px 0;
+}
+
+ion-label {
+  margin: 0;
+  display: block;
+  overflow: hidden;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

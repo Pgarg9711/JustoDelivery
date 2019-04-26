@@ -1,0 +1,31 @@
+page-receive-record-details {
+
+
+  .item.item-block .item-inner {
+    padding-right: 0px;
+    border-bottom: 1px solid #dedede;
+  }
+  .list-header-md {
+    min-height: 4.5rem;
+    margin-bottom: 0px;
+    border-top: 0px;
+    border-bottom: 1px solid #dedede;
+    font-size: 1.4rem;
+    color: #757575;
+  }
+  .inspection-status{
+    min-height : 2rem;
+    border-radius: 5px;
+    .label{
+      font-size: small;
+      margin: 5px 8px 5px 0px
+    }
+  }
+
+  .item-button {
+    padding: 0px !important;
+    height: 24px;
+    font-size: 1.4rem !important;
+  }
+
+}

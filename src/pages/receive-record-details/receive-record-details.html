@@ -1,0 +1,73 @@
+<!--
+  Generated template for the ReceiveRecordDetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Receiving Record Details</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item-group no-padding>
+        <ion-item-divider *ngIf="arrivalRecordDetails" no-lines no-padding class="transparent_background">
+            <h2 *ngIf="arrivalRecordDetails.warehouse_code">#{{arrivalRecordDetails.warehouse_code}}{{arrivalRecordDetails.r_id}}</h2>
+            <p item-end *ngIf="arrivalRecordDetails.created_at_formatted">
+                {{arrivalRecordDetails.created_at_formatted}}
+            </p>
+        </ion-item-divider>
+        <ion-item class="inspection-status" no-padding no-lines *ngIf="arrivalRecordDetails.record_status_formatted" color="{{ statusColor }}" text-center>
+            Status: {{arrivalRecordDetails.record_status_formatted}}
+        </ion-item>
+        <ng-container *ngFor = "let r of RECV_DETAILS_ARRAY; let i = index">
+            <ion-item no-padding text-wrap *ngIf="i == 4">
+                <h3>
+                    {{r.name}}
+                </h3>
+                <ion-note color="secondary">
+                    {{r.value}}
+                </ion-note>
+            </ion-item>
+            <ion-item no-padding *ngIf="i != 4">
+                {{r.name}}
+                <ion-note item-end color="secondary">
+                    {{r.value}}
+                </ion-note>
+            </ion-item>
+        </ng-container>
+    </ion-item-group>
+
+
+    <ion-item-group padding-top="0.5" no-padding>
+        <ion-list-header no-padding>
+            Inspection #1
+            <ion-icon class="toggle-btn-icon" [name]="isItemShown(i) ? 'ios-arrow-down' : 'ios-arrow-forward'"  [ngClass]="{active: isItemShown(i)}" item-end></ion-icon>
+        </ion-list-header>
+        <ion-item no-padding>
+            d
+        </ion-item>
+    </ion-item-group>
+
+
+
+    <button text-capitalize no-padding no-margin ion-button block icon-start (click)="beginInspection()" *ngIf="arrivalRecordDetails.record_status_formatted == receiveInRecordStatus.INSPECTION_IN_PROGRESS">
+        <ion-icon name="filing"></ion-icon>
+        Resume Inspection
+    </button>
+    <button text-capitalize no-padding no-margin ion-button block icon-start (click)="beginInspection()" *ngIf="arrivalRecordDetails.record_status_formatted == receiveInRecordStatus.INSPECTION_PENDING">
+        <ion-icon name="filing"></ion-icon>
+        Begin Inspection
+    </button>
+    <ion-item no-padding no-lines padding-top="10">
+        <button ion-button clear icon-start item-start no-padding no-margin text-capitalize>
+            <ion-icon name="print"></ion-icon>
+            Print Labels
+        </button>
+        <button ion-button clear icon-start item-end no-padding no-margin text-capitalize>
+            <ion-icon name="add-circle"></ion-icon>
+            Add Images
+        </button>
+    </ion-item>
+</ion-content>

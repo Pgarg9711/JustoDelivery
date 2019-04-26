@@ -1,0 +1,32 @@
+<!--
+  Generated template for the TicketsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Tickets</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <button item-end ion-button (click)="stopButtonClicked()">Stop</button>
+    <h2 item-end>59 : 10</h2>
+  </ion-item>
+  <h3>
+    XUBYZWIO67 - 12345 / 831548 - Broken Leg on Chair
+  </h3>
+  <div>
+    <p>
+      Chair is in Rack location 33B and has a broken leg on the front. See Rodney he knows.
+    </p>
+    <p>Category: Repair Needed</p>
+    <p class="text-wp-danger">Priority: Medium</p>
+    <p>status: <ion-badge>Opened</ion-badge></p>
+    <p>Created on: 02/12/2019 08:54 AM</p>
+  </div>
+  <button ion-button (click)="commentButtonClicked()">Add Comment</button>
+
+</ion-content>

@@ -1,0 +1,30 @@
+<!--
+  Generated template for the ScanRecordCodePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Scan QR Code</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-list-header no-lines no-padding>
+            <ion-note color="dark" text-capitalize>
+                Scan QR code By clicking Icon or Enter Receive in Record Code Manually and Press Search, It will redirect you to Inspect Item Page.
+            </ion-note>
+        </ion-list-header>
+
+        <form novalidate [formGroup]="scanQRCodeForm" (ngSubmit)="viewInspectionDetails()">
+            <ion-item class="litem_input">
+                <ion-input type="number" placeholder="Enter Record ID" formControlName="receiveInCode" min="1"></ion-input>
+                <button  ion-button item-end [navPush]="'QrScannerPage'" clear><img [src]="SCAN_BTN" alt="scan"></button>
+            </ion-item>
+            <p class="has-error">{{ showError('receiveInCode') }}</p>
+            <button ion-button full icon-start type="submit" class="submit_btn"><ion-icon name="search"></ion-icon>Search</button>
+        </form>
+    </ion-list>
+</ion-content>

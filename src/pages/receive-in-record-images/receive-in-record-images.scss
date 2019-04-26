@@ -1,0 +1,23 @@
+page-receive-in-record-images {
+
+  .scrollable{
+    height: 200px;
+  }
+
+  ion-slides {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #93e4e724;
+  }
+
+  ion-buttons {
+    /* margin: 0 0.2rem; */
+    display: block;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    pointer-events: none;
+    margin-right: 20%;
+    margin-left: 30%;
+  }
+}

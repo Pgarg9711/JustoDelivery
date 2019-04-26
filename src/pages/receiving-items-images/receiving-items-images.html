@@ -1,0 +1,57 @@
+<!--
+  Generated template for the ReceivingItemsImagesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Receiving Item Images</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding #IIMG>
+    <h5 class="info_message" *ngIf="finalImagesList.length == 0">
+        *Select Images from Gallery by Clicking Gallery icon or Take picture using camera and then Upload Directly by clicking Camera Icon Below !
+    </h5>
+
+    <ion-item-divider color="light" *ngIf="finalImagesList.length">
+        Selected Images
+        <a icon-start class="right" (click)="uploadImage(finalImagesList,1)"><ion-icon name="cloud-upload"></ion-icon>Upload</a>
+    </ion-item-divider>
+    <ion-scroll class="h-300" scrollY="true">
+        <ion-list scroll="true">
+            <ion-item *ngFor="let img of finalImagesList; index as pos">
+                <ion-icon name="checkmark-circle"></ion-icon>
+                <ion-thumbnail item-start>
+                    <img src="{{img.url}}" (click)="openGallery(finalImagesList, pos)">
+                </ion-thumbnail>
+                <button ion-button clear item-end large (click)="deleteImage(img, pos)"><ion-icon name="trash"></ion-icon></button>
+            </ion-item>
+        </ion-list>
+    </ion-scroll>
+
+    <ion-item-group style="bottom: 25px;">
+        <ion-item-divider color="light" *ngIf="savedItemImages.length != 0">Uploaded Images</ion-item-divider>
+        <ion-slides #Slider  [slidesPerView]="3.2" [spaceBetween]="5">
+            <ion-slide *ngFor="let img of savedItemImages; let i=index">
+                <ion-card style="width:100px; height:100px">
+                    <img [src]="defaultImg" [lazyLoad]="img.url" [scrollObservable]="Slider.ionSlideWillChange" style="width: 100%; height: 100%" (click)="openGallery(uploadedImages, i)">
+                </ion-card>
+            </ion-slide>
+        </ion-slides>
+
+    </ion-item-group>
+</ion-content>
+
+<ion-footer no-padding no-margin no-border text-center align-items-center >
+    <ion-item>
+        <button class="footerBtns" clear text-center ion-button large (click)="takePictureByCamera()">
+            <ion-icon name="camera"></ion-icon>
+        </button>
+        <button class="footerBtns" clear text-center ion-button large (click)="selectImageFromGallery()">
+            <ion-icon name="film"></ion-icon>
+        </button>
+    </ion-item>
+</ion-footer>
+

@@ -1,0 +1,34 @@
+page-scan-record-code {
+  ion-icon{
+    font-size: 4rem;
+  }
+
+  ion-list-header ion-label{
+    white-space: unset;
+  }
+  .litem_input{
+    background-color: transparent;
+    margin:20px 0px 20px 0px;
+    padding: 0px;
+    .item-inner{
+      box-shadow:none !important;
+    }
+  }
+
+  .has-error{
+    margin: -15px 0px 0px 0px;
+    font-size: small;
+    color: #fa0e0e !important;
+    position: absolute;
+
+  }
+
+  .submit_btn{
+    margin-top: 22px;
+  }
+
+  //.item.item-block .item-inner {
+  //  padding-right: 0px;
+  //  border-bottom: 1px solid #dedede;
+  //}
+}

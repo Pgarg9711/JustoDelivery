@@ -1,0 +1,66 @@
+<!--
+  Generated template for the ReceiveInRecordsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Receive In Records</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item-group no-padding>
+        <ion-item no-lines no-padding class="heading">
+            Receive in Record Details
+            <button item-end ion-button clear large no-padding (click)= "editRecord()">
+                <ion-icon name="create"></ion-icon>
+            </button>
+        </ion-item>
+        <ng-container *ngFor = "let r of REC_DETAILS; let i = index">
+            <ion-item no-padding text-wrap *ngIf="i == 3">
+                <h3>
+                    {{r.name}}
+                </h3>
+                <ion-note color="secondary">
+                    {{r.value}}
+                </ion-note>
+            </ion-item>
+            <ion-item no-padding *ngIf="i != 3">
+                {{r.name}}
+                <ion-note item-end color="secondary">
+                    {{r.value}}
+                </ion-note>
+            </ion-item>
+            <!--<ng-container *ngIf = "!(r.value)">-->
+                <!--<ion-item no-padding>-->
+                    <!--{{r.name}}-->
+                    <!--<ion-note item-end color="secondary">-->
+                        <!--{{r.value}}-->
+                    <!--</ion-note>-->
+                <!--</ion-item>-->
+            <!--</ng-container>-->
+            <!--<ng-container *ngIf ="r.value && r.value.length <= 40">-->
+                <!--<ion-item no-padding>-->
+                    <!--{{r.name}}-->
+                    <!--<ion-note item-end color="secondary">-->
+                        <!--{{r.value}}-->
+                    <!--</ion-note>-->
+                <!--</ion-item>-->
+            <!--</ng-container>-->
+            <!--<ng-container *ngIf = "r.value && r.value.length > 40">-->
+                <!--<ion-item no-padding no-lines>{{r.name}}</ion-item>-->
+                <!--<ion-item no-padding><ion-note color="secondary">{{r.value}}</ion-note></ion-item>-->
+            <!--</ng-container>-->
+        </ng-container>
+        <ion-row>
+            <ion-col col="6">
+                <button ion-button icon-start block (click)="add_images()" color="light"> <ion-icon name="add-circle" ></ion-icon> Add Images</button>
+            </ion-col>
+            <ion-col col="6">
+                <button ion-button icon-start block (click)="print_label()"> <ion-icon name="print"></ion-icon> Print Label</button>
+            </ion-col>
+        </ion-row>
+    </ion-item-group>
+</ion-content>
