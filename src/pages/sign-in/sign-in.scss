@@ -1,5 +1,10 @@
 page-sign-in {
 
+  .footer-text{
+    width:70%;
+    margin:16px auto;
+    display: table;
+  }
   .litem_input{
     background-color: transparent;
     margin:20px 0px 20px 0px;
@@ -12,10 +17,6 @@ page-sign-in {
     font-size: small;
     color: #fa0e0e !important;
     position: absolute;
-  }
-
-  .submit-btn{
-    margin-top: 32px;
   }
 
   img{
@@ -33,10 +34,12 @@ page-sign-in {
     padding: 5px 20px;
   }
 
-  .item-button {
-    padding: 0em;
-    height: 25px;
-    font-size: 1.6rem !important;
+  button{
+    margin: 16px auto !important;
+    display: table !important;
+  }
+  .submit-btn{
+    margin-top: 32px;
   }
 
 }

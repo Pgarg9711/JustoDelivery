@@ -8,19 +8,31 @@
     <ion-item no-lines class="litem_input" text-center>
         <img [src]="LOGO" alt="LOGO">
     </ion-item>
-    <form novalidate [formGroup]="loginForm" (ngSubmit)="onSignIn()">
-        <ion-item class="litem_input" no-padding>
-            <ion-input class="form-control" formControlName="email" type="email" required placeholder="Email"></ion-input>
-        </ion-item>
-        <p class="lhas-error">{{ showError('email') }}</p>
 
-        <ion-item class="litem_input" no-padding>
-            <ion-input class="form-control" formControlName="password" type="password" required placeholder="Password"></ion-input>
-        </ion-item>
-        <p class="lhas-error">{{ showError('password') }}</p>
-        <button ion-button class="submit-btn" block type="submit" color="primary">Login</button>
-        <ion-item text-center no-padding no-margin no-lines class="transparent_background">
-            <button ion-button clear color="danger" (click)="onForgotPassword()" type="button" text-capitalize><u>Forgot Your Password?</u></button>
-        </ion-item>
-    </form>
+    <div *ngIf="isLogin">
+        <form novalidate [formGroup]="loginForm" (ngSubmit)="onSignIn()">
+            <ion-item class="litem_input" no-padding>
+                <ion-input class="form-control" formControlName="email" type="email" required placeholder="Email"></ion-input>
+            </ion-item>
+            <p class="lhas-error">{{ showError('email') }}</p>
+
+            <ion-item class="litem_input" no-padding>
+                <ion-input class="form-control" formControlName="password" type="password" required placeholder="Password"></ion-input>
+            </ion-item>
+            <p class="lhas-error">{{ showError('password') }}</p>
+            <button ion-button class="submit-btn" block type="submit" color="primary">Login</button>
+        </form>
+        <button ion-button clear color="danger" (click)="isLogin = !isLogin" type="button" text-capitalize><u>Forgot Your Password?</u></button>
+    </div>
+    <div *ngIf="!isLogin">
+        <form novalidate [formGroup]="forgotPasswordForm" (ngSubmit)="sendPasswordResetLink()">
+            <ion-item class="litem_input" no-padding>
+                <ion-input class="form-control" formControlName="email" type="email" required placeholder="Email"></ion-input>
+            </ion-item>
+            <p class="lhas-error">{{ showErrorForgotPass('email') }}</p>
+            <button ion-button class="submit-btn" block type="submit" color="secondary" text-capitalize>Send Link</button>
+        </form>
+        <p class="footer-text">We will send a code to the registered email address.</p>
+        <button ion-button clear (click)="isLogin = !isLogin" type="button">Login Here</button>
+    </div>
 </ion-content>

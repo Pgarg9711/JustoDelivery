@@ -28,7 +28,6 @@ export class AuthProvider {
 
     // Function For Login User
     login(data) {
-
         return  new Promise((resolve, reject) => {
             this.http.post(this.final_url+"/login", {email: data.email, password: data.password})
                 .subscribe(res => {
@@ -54,5 +53,16 @@ export class AuthProvider {
         if(btnClicked == null) {
             this.commonProvider.show_basic_alert('Invalid User', 'Logged out due to invalid Login');
         }
+    }
+
+    forgotPassword(data){
+        return new Promise((resolve, reject)=>{
+            this.http.post(this.final_url+"/forgot/password", {email: data.email})
+                .subscribe(res =>{
+                   return resolve(res);
+                }, errorl=>{
+                    return reject(errorl);
+                });
+        })
     }
 }

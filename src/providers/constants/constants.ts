@@ -18,9 +18,9 @@ export class ConstantsProvider {
 
 export enum SITE_URLS {
     PRINT_LABEL = 'https://crm.justodelivery.com/staging/public/warehouse/print/arrival/order/label/',
-    API_URL = 'https://crm.justodelivery.com/staging/public/api/',
+    // API_URL = 'https://crm.justodelivery.com/staging/public/api/',
     VERSION = 'v1',
-    // API_URL = 'http://localhost:80/justodelivery/public/api/',
+    API_URL = 'http://localhost:80/justodelivery/public/api/',
 }
 
 export enum VARS {
@@ -38,11 +38,57 @@ export enum IMG {
     SCAN_QR_BTN = "assets/imgs/qr-code(2).svg"
 }
 
-export enum RECEIVE_IN_RECORD_STATUS {
+
+// Status For Record
+export enum RECEIVE_IN_RECORD_STATUS_FORMATTED {
     INSPECTION_PENDING = "Pending Inspection",
     INSPECTION_IN_PROGRESS = "Inspection In Progress",
-    INSPECTION_COMPLETED    = "Inspection Completed"
+    INSPECTION_COMPLETED = "Inspection Completed",
+    INSPECTION_IN_PROGRESS_ATT_REQ = "Inspection Requires Attention"
 }
+
+// Status Code for Record
+export enum RECEIVE_IN_RECORD_STATUS_CODE{
+    INSPECTION_PENDING = 0,
+    INSPECTION_IN_PROGRESS = 1,
+    INSPECTION_COMPLETED    = 2,
+    INSPECTION_IN_PROGRESS_ATT_REQ = 3
+}
+
+// Status Code for Item
+export enum RECEIVE_IN_STATUS {
+    'INSPECTION_PENDING' = 0,
+    'INSPECTION_DEFECTIVE' = 1, //It means defective
+    'INSPECTION_DONE' = 2, //It means good quality
+}
+
+// Status for Item
+export enum RECEIVE_IN_STATUS_FORMATTED{
+    'INSPECTION_PENDING' = 'Pending Inspection',
+    'INSPECTION_DEFECTIVE' = 'Defective', //It means defective
+    'INSPECTION_DONE' = 'Good Quality', //It means good quality
+}
+
+
+// Status code for Defective Items
+export enum DEFECTIVE_STATUS{
+    'NOT_DONE' = 0,
+    'REPAIRED' = 1,
+    'REPLACED' = 2,
+}
+
+// Status for Defective Items
+export enum DEFECTIVE_STATUS_FORMATTED{
+    'NOT_DONE' = 'Not Resolved',
+    'REPAIRED' = 'Repair Done',
+    'REPLACED' = 'Replacement Done',
+}
+
+export enum PLM_ENTITY{
+    'TEMP_LABEL' = 0,
+    'ACTUAL_ITEM' = 1
+}
+
 
 export enum VALIDATION_ERR_MSG {
     REQUIRED_FIELD_ERR = "*You must enter a value.",

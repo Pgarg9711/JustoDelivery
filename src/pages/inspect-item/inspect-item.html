@@ -13,68 +13,68 @@
 <ion-content padding>
     <ion-list>
         <ion-list-header no-padding no-lines no-margin>
-            <h2>
-                <b>
-                    #RLA144
-                </b>
+            <h2 *ngIf="receiveInRecordDetails.warehouse_code">
+                #{{receiveInRecordDetails.warehouse_code}}{{receiveInRecordDetails.r_id}}
             </h2>
 
-            <p item-end>03/05/2019 02:59 AM</p>
+            <p item-end *ngIf="receiveInRecordDetails.created_at_formatted">
+                {{receiveInRecordDetails.created_at_formatted}}
+            </p>
         </ion-list-header>
         <div *ngFor="let itm of itemsList; let i=index">
             <ion-item (click)="toggleItem(i)" no-padding no-margin>
-                Item #{{itm.item_id}}: {{itm.item_name}}
+                <b>Item #{{itm.item_id}}: {{itm.item_name}}</b>
                 <ion-icon class="toggle-btn-icon" [name]="isItemShown(i) ? 'ios-arrow-down' : 'ios-arrow-forward'"  [ngClass]="{active: isItemShown(i)}" item-end></ion-icon>
             </ion-item>
             <div *ngIf="isItemShown(i)">
-                <ion-item no-lines no-padding no-margin class="add_images_btn">
-                    <button ion-button clear text-capitalize icon-start (click)="add_item_images(itm.item_id)"><ion-icon name="images"></ion-icon> Add Pics</button>
-                </ion-item>
-                <ion-item no-lines no-padding no-margin>
-                    <ion-label stacked>
-                        Status
-                    </ion-label>
-                    <ion-select placeholder="Select" [(ngModel)]="itemInspectionStatus" (ngModelChange)="inspectionStatusChanged()">
-                        <ion-option value="pending">Pending Inspection</ion-option>
-                        <ion-option value="good">Good Quality</ion-option>
-                        <ion-option value="defective">Defective</ion-option>
-                    </ion-select>
-                </ion-item>
-                <ion-item no-lines *ngIf="showSubStatus[i]" no-padding no-margin>
-                    <ion-label stacked color="danger">
-                        Is Defect Resolve?
-                    </ion-label>
-                    <ion-select placeholder="Select" [(ngModel)]="itemInspectionStatus[i]" (ngModelChange)="inspectionStatusChanged()">
-                        <ion-option value="notResoled">Not Resolved</ion-option>
-                        <ion-option value="repairDone">Repair Done</ion-option>
-                        <ion-option value="replacement">Replacement Done</ion-option>
-                    </ion-select>
-                </ion-item>
-                <ion-item no-lines no-padding no-margin>
-                    <ion-label stacked>
-                        Notes:
-                    </ion-label>
-                    <ion-textarea placeholder="Notes" rows="4"></ion-textarea>
-                </ion-item>
-                <ion-item no-lines no-padding no-margin>
-                    <ion-label stacked>
-                        Rack:
-                    </ion-label>
-                    <ionic-selectable item-content placeholder="Select" [(ngModel)]="rack" [items]="rackList" itemValueField="id" itemTextField="rack_name" [canSearch]="true" (onChange)="rackChange($event)">
-                    </ionic-selectable>
-                </ion-item>
+            <ion-item no-lines no-padding no-margin class="add_images_btn">
+                <button ion-button clear text-capitalize icon-start (click)="add_item_images(itm.item_id)"><ion-icon name="images"></ion-icon> Add Pics</button>
+            </ion-item>
+            <ion-item no-lines no-padding no-margin>
+                <ion-label stacked>
+                    Status
+                </ion-label>
+                    <ion-select placeholder="Select" [(ngModel)]="item_status[i]" (ngModelChange)="inspectionStatusChanged(i)">
+                    <ion-option value="{{ receiveInStatus['INSPECTION_PENDING'] }}">{{ receiveInStatusText['INSPECTION_PENDING'] }}</ion-option>
+                    <ion-option value="{{ receiveInStatus['INSPECTION_DEFECTIVE'] }}">{{ receiveInStatusText['INSPECTION_DEFECTIVE'] }}</ion-option>
+                    <ion-option value="{{ receiveInStatus['INSPECTION_DONE'] }}">{{ receiveInStatusText['INSPECTION_DONE'] }}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item no-lines *ngIf="showSubStatus[i]" no-padding no-margin>
+                <ion-label stacked color="danger">
+                    Is Defect Resolve?
+                </ion-label>
+                <ion-select placeholder="Select" [(ngModel)]="defective_status[i]">
+                    <ion-option value="{{ defectiveStatus['NOT_DONE'] }}">{{ defectiveStatusText['NOT_DONE'] }}</ion-option>
+                    <ion-option value="{{ defectiveStatus['REPAIRED'] }}">{{ defectiveStatusText['REPAIRED'] }}</ion-option>
+                    <ion-option value="{{ defectiveStatus['REPLACED'] }}">{{ defectiveStatusText['REPLACED'] }}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item no-lines no-padding no-margin>
+                <ion-label stacked>
+                    Notes:
+                </ion-label>
+                <ion-textarea placeholder="Notes" rows="1" [(ngModel)]="notes[i]" cMaxLength="350" maxlength="350"></ion-textarea>
+            </ion-item>
+            <ion-item no-lines no-padding no-margin>
+                <ion-label stacked>
+                    Rack:
+                </ion-label>
+                <ionic-selectable item-content placeholder="Select" [(ngModel)]="selectedRack[i]"  [items]="rackList" itemValueField="id" itemTextField="rack_name" [canSearch]="true" (onChange)="rackChange($event, i)">
+                </ionic-selectable>
+            </ion-item>
             </div>
         </div>
     </ion-list>
-    <button ion-button color="primary" block text-capitalize>Save</button>
+    <button ion-button color="primary" block text-capitalize (click)="saveButtonClicked('save')">Save</button>
     <ion-item no-padding no-lines class="inspection_btns">
-        <button ion-button item-start text-capitalize color="danger" clear>
-                Back
+        <button ion-button item-start text-capitalize color="danger" clear (click)="backButtonClicked()">
+            Back
         </button>
-        <button ion-button text-capitalize clear color="primary">
+        <button ion-button text-capitalize clear color="primary" (click)="saveButtonClicked('later')">
             Later
         </button>
-        <button ion-button item-end  text-capitalize clear color="secondary">
+        <button ion-button item-end  text-capitalize clear color="secondary" (click)="saveButtonClicked('continue')">
             Continue
         </button>
     </ion-item>

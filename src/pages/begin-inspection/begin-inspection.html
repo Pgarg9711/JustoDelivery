@@ -11,34 +11,54 @@
 </ion-header>
 <ion-content padding>
     <!--List of Boxes-->
-    <div *ngIf="itemsArray && itemsArray!=undefined && itemsArray!=null && itemsArray!=''">
-        <ion-card *ngFor="let box of itemsArray; let i = index">
-            <ion-card-header>
-                <ion-item no-padding no-margin class="box-header">
-                    <ion-label><b>Box{{i+1}}</b></ion-label>
-                    <ion-checkbox class="checkbox" type="checkbox" (ionchange)="selectAllItems(box.parentItem)" [(ngModel)]="chckdBoxes[box.parentItem+'_box']"></ion-checkbox>
-                    <button class="add_button" (click)="addItem(box.parentItem)" ion-button icon-start item-end clear no-margin no-padding text-capitalize color="secondary">
-                        <ion-icon item-start name="add-circle" no-margin no-padding></ion-icon>Add Item
-                    </button>
-                </ion-item>
-            </ion-card-header>
-            <ion-card-content>
-                <ion-list no-padding no-margin>
-                    <ion-list *ngFor="let item of box.items; let j = index" no-padding no-margin>
-                        <ion-item no-lines no-padding no-margin>
-                            <ion-label>Item #{{item.itemId}}</ion-label>
-                            <ion-checkbox class="checkbox" type="checkbox" [(ngModel)]="chckdItems[box.parentItem+'_box'][j].checked" (change)="selectOneItem(j, box.parentItem)"></ion-checkbox>
-                            <button class="delete_btn" (click)="deleteItem(item.itemId, item.inspectionItemId)" ion-button item-end icon-start clear>
-                                <ion-icon item-end name="remove-circle" color="danger"></ion-icon>
-                            </button>
-                        </ion-item>
-                        <ion-item no-padding no-lines no-margin>
-                            <ion-input class="description_input" type="text" placeholder="Enter Description" [(ngModel)]="chckdItems[box.parentItem+'_box'][j].description"></ion-input>
-                        </ion-item>
-                    </ion-list>
-                </ion-list>
-            </ion-card-content>
-        </ion-card>
+
+    <div *ngIf="itemLeftForInspection == false">
+        <p class="text_danger">
+            No more item(s) found for new inspection, Please Complete Pending Inspection.
+        </p>
+        <button ion-button full navPop>Back</button>
     </div>
-    <button ion-button full (click)="inspectItem()">Next</button>
+
+    <div *ngIf="itemsArray && itemsArray!=undefined && itemsArray!=null && itemsArray!='' && itemLeftForInspection">
+        <h2>{{ pageTitle }}</h2>
+        <ion-card *ngFor="let box of itemsArray; let i = index">
+            <div *ngIf="box.skipBox == false">
+                <ion-card-header>
+                    <ion-item no-padding no-margin class="box-header">
+                        <ion-label><b>Box{{i+1}}</b></ion-label>
+                        <ion-checkbox class="checkbox" type="checkbox" (click)="selectAllItems(box.parentItem)" [(ngModel)]="chckdBoxes[box.parentItem+'_box']"></ion-checkbox>
+                        <button class="add_button" (click)="addItem(box.parentItem, i)" ion-button icon-start item-end clear no-margin no-padding text-capitalize color="secondary">
+                            <ion-icon item-start name="add-circle" no-margin no-padding></ion-icon>Add Item
+                        </button>
+                    </ion-item>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-list no-padding no-margin>
+                        <ion-list *ngFor="let item of box.items; let j = index" no-padding no-margin>
+                            <div *ngIf="item.skipItem == false">
+                                <ion-item no-lines no-padding no-margin>
+                                    <ion-label>
+                                        Item #{{item.itemId}}
+                                        <span *ngIf="item.itemStatusFormatted" [ngClass]="isItemInspectionCompleted(i,j)?'text_success':'text_danger'">
+                                            ({{item.itemStatusFormatted}}<span *ngIf="item.itemDefectiveStatusFormatted"> - {{item.itemDefectiveStatusFormatted}}</span>)
+                                        </span>
+
+                                    </ion-label>
+                                    <ion-checkbox class="checkbox" type="checkbox" [(ngModel)]="chckdItems[box.parentItem+'_box'][j].checked" (click)="selectOneItem(j, box.parentItem)"></ion-checkbox>
+                                    <button class="delete_btn" (click)="deleteItem(item.itemId, item.inspectionItemId, i, j)" ion-button item-end icon-start clear>
+                                        <ion-icon item-end name="remove-circle" color="danger"></ion-icon>
+                                    </button>
+                                </ion-item>
+                                <ion-item no-padding no-lines no-margin>
+                                    <ion-input class="description_input" type="text" placeholder="Enter Description" [(ngModel)]="chckdItems[box.parentItem+'_box'][j].description"></ion-input>
+                                </ion-item>
+                            </div>
+                        </ion-list>
+                    </ion-list>
+                </ion-card-content>
+            </div>
+        </ion-card>
+        <button ion-button full (click)="inspectItem()">Next</button>
+    </div>
+
 </ion-content>

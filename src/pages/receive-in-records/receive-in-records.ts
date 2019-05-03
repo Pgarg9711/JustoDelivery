@@ -4,6 +4,8 @@ import {AuthProvider} from "../../providers/auth/auth";
 import {CommonProvider} from "../../providers/common/common";
 import {ReceiveInRecordsProvider} from "../../providers/receive-in-records/receive-in-records";
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import {PLM_ENTITY} from "../../providers/constants/constants";
+import {ItemsInspectionProvider} from "../../providers/items-inspection/items-inspection";
 
 /**
  * Generated class for the ReceiveInRecordsPage page.
@@ -21,9 +23,12 @@ export class ReceiveInRecordsPage {
     receive_in_record_data: any;
     REC_DETAILS:any = [];
     private itemShown: true;
+    recordLabelPrinted = 0;
+    recordNewLabelRequest = 0;
+    api_token = '';
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
-                public rcvRecordProvider: ReceiveInRecordsProvider,
+                public inspectionItemProvider: ItemsInspectionProvider,
                 public authProvider: AuthProvider,
                 public commonProvider: CommonProvider) {
         // Receive in Record id
@@ -38,8 +43,11 @@ export class ReceiveInRecordsPage {
             ];
             // API token
             this.authProvider.getLoginUserToken().then((val) => { // Getting API token if logged in user
-                if (!val){
-                    // Logging Out if not set Token
+                if (val){
+                    this.api_token = val;
+                    this.updatePrintCount(this.receive_in_record_data.last_record_id, PLM_ENTITY.TEMP_LABEL);   // Updating Count for Temp Labels
+                }// Logging Out if not set Token
+                else{
                     this.authProvider.logout();
                 }
             });
@@ -93,10 +101,36 @@ export class ReceiveInRecordsPage {
         this.navCtrl.push('ReceiveInRecordImagesPage', {data:this.receive_in_record_data});
     }
 
-    // When Print Label Button Clicked, Redirecting to browser and Downloading PDF
+    // When Print Label Button Clicked, Sending Request to Print
     print_label(){
-        let data = '/warehouse/print/arrival/order/label/'+this.receive_in_record_data.last_record_id;
-        this.rcvRecordProvider.printLabel(data);
+        // let data = '/warehouse/print/arrival/order/label/'+this.receive_in_record_data.last_record_id;
+        // this.rcvRecordProvider.printLabel(data);
+
+
+        let loader = this.commonProvider.presentLoading();
+        let apiData = {
+            'e_id':this.receive_in_record_data.last_record_id,
+            'user_api_token': this.api_token
+        };
+        this.inspectionItemProvider.printTempLabelRequest(apiData).then((res:any)=>{
+            console.log('Print Label', res);
+            if(res){
+                if(res.status == true){
+                    loader.dismissAll();
+                    this.commonProvider.show_basic_prompt(res.message);
+                    this.updatePrintCount(this.receive_in_record_data.last_record_id, PLM_ENTITY.TEMP_LABEL);
+                }
+                else{
+                    this.commonProvider.show_basic_prompt(res.message);
+                }
+            }
+            else{
+                this.commonProvider.show_basic_prompt('Something Went Wrong!');
+            }
+        })
+        .catch((err)=>{
+            this.commonProvider.show_basic_prompt(err);
+        })
     }
 
 
@@ -107,6 +141,30 @@ export class ReceiveInRecordsPage {
         } else {
             this.REC_DETAILS[item].open = 1;
         }
+    }
+
+    // Getting Print Counts for Labels
+    updatePrintCount(entityID, entityType){
+        let apiData = {
+            'e_id':entityID,
+            'e_type': entityType,
+            'user_api_token': this.api_token
+        };
+        console.log('API Data',apiData);
+        this.inspectionItemProvider.getPrintCounts(apiData).then((res:any)=>{
+            console.log('Print Label Request', res);
+            if(res && res.status == true){
+                if(res.data) {
+                    if (entityType == PLM_ENTITY.TEMP_LABEL) {
+                        this.recordLabelPrinted = res.data.printed_label_count;
+                        this.recordNewLabelRequest = res.data.new_label_count;
+                    }
+                }
+            }
+        })
+            .catch((err)=>{
+                console.log(err);
+            });
     }
 
 

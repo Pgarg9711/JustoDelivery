@@ -107,4 +107,86 @@ export class ItemsInspectionProvider {
         )
     });
   }
+
+
+  // Requesting for Print Item Label
+  printItemLabelRequest(data){
+      return new Promise((resolve, reject)=>{
+          this.http.post(api_url+"/warehouse/print/request/for/item/label", data)
+              .subscribe(
+                  res=>{
+                      if(res['status'] == -1){
+                          this.authProvider.logout();
+                      }
+                      else{
+                          return resolve(res);
+                      }
+                  },
+                  errorl =>{
+                      return resolve(errorl);
+                  }
+              )
+      });
+  }
+
+  printTempLabelRequest(data){
+        return new Promise((resolve, reject)=>{
+            this.http.post(api_url+"/warehouse/print/request/for/temp/label", data)
+                .subscribe(
+                    res=>{
+                        if(res['status'] == -1){
+                            this.authProvider.logout();
+                        }
+                        else{
+                            return resolve(res);
+                        }
+                    },
+                    errorl =>{
+                        return resolve(errorl);
+                    }
+                )
+        });
+  }
+
+
+  // Fetching Print Counts for Both Entity Types(Items and Receive in Record)
+  getPrintCounts(data){
+      return new Promise((resolve,reject)=>{
+          this.http.post(api_url+"/warehouse/get/plm/counts", data)
+              .subscribe(
+                  res=>{
+                      if(res['status'] == -1){
+                          this.authProvider.logout();
+                      }
+                      else{
+                          return resolve(res);
+                      }
+                  },
+                  error1 => {
+                      return resolve(error1);
+                  }
+              )
+      })
+  }
+
+    // Fetching Print Counts for Both Entity Types(Items and Receive in Record)
+   saveArrivalItemsDetails(data){
+        return new Promise((resolve,reject)=>{
+            this.http.post(api_url+"/save/arrival/items/details", data)
+                .subscribe(
+                    res=>{
+                        if(res['status'] == -1){
+                            this.authProvider.logout();
+                        }
+                        else{
+                            return resolve(res);
+                        }
+                    },
+                    error1 => {
+                        return resolve(error1);
+                    }
+                )
+        })
+  }
+
 }

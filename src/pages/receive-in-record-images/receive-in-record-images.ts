@@ -57,7 +57,6 @@ export class ReceiveInRecordImagesPage {
                 public event: Events,
                 public zone: NgZone,
                 public modalCtrl: ModalController) {
-
         // Receive in Record data sent by previous page
         this.receive_in_record_data = this.navParams.get('data');
 
@@ -242,6 +241,7 @@ export class ReceiveInRecordImagesPage {
     uploadImage(file, flag) {
         let loader = this.commonProvider.presentLoading();
         if(file) {
+            console.log('Before Upload', file);
             let totalImgsToUpload = file.length;
             let imgsUploaded = 0;   // Number of Images Uploaded to Server
             let errMsg = '';        // Err String
@@ -271,6 +271,8 @@ export class ReceiveInRecordImagesPage {
 
                 // Use the FileTransfer to upload the image
                 fileTransfer.upload(targetPath, url, options).then(data => {
+
+                    console.log('Uploaded Data', data);
                     this.spinnerFlag = false;
                     var response = JSON.parse(data.response);
                     if (response.status == true) {      // If image Uploaded Adding to ImgUploaded Variable

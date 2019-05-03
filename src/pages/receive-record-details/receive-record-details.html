@@ -18,6 +18,7 @@
                 {{arrivalRecordDetails.created_at_formatted}}
             </p>
         </ion-item-divider>
+        <!--Showing Status String received from API-->
         <ion-item class="inspection-status" no-padding no-lines *ngIf="arrivalRecordDetails.record_status_formatted" color="{{ statusColor }}" text-center>
             Status: {{arrivalRecordDetails.record_status_formatted}}
         </ion-item>
@@ -26,48 +27,83 @@
                 <h3>
                     {{r.name}}
                 </h3>
-                <ion-note color="secondary">
+                <ion-note color="dark">
                     {{r.value}}
                 </ion-note>
             </ion-item>
             <ion-item no-padding *ngIf="i != 4">
                 {{r.name}}
-                <ion-note item-end color="secondary">
+                <ion-note item-end color="dark">
                     {{r.value}}
                 </ion-note>
             </ion-item>
         </ng-container>
     </ion-item-group>
 
+    <div *ngIf="showSpinner" text-center >
+        <ion-spinner name="circles"></ion-spinner>
+    </div>
+    <div *ngIf="savedInspectionItems.length">
+        <ion-list *ngFor="let inspection of savedInspectionItems; let i = index">
+            <ion-list-header  no-padding no-margin>
+                Inspection #{{i+1}}
+                <!--If Inspection InCompleted-->
+                <button ion-button type="button" (click)="beginInspection(inspection[0].inspection_items_id)" clear icon-start  *ngIf="arrivalRecordDetails.record_status_code != receiveInRecordStatusCode.INSPECTION_COMPLETED">
+                    <ion-icon name="create"></ion-icon>
+                </button>
+                <ion-icon (click)="toggleItem(i)" class="toggle-btn-icon" [name]="isItemShown(i) ? 'ios-arrow-down' : 'ios-arrow-forward'"  [ngClass]="{active: isItemShown(i)}" item-end></ion-icon>
+            </ion-list-header>
+            <div *ngIf="isItemShown(i)">
+                <ion-list no-padding no-margin *ngFor="let item of inspection; let j = index">
+                    <ion-item no-padding no-margin>
+                        <h3>Item #{{item.r_item_id}}</h3>
+                        <p>Name: {{item.item_name}}</p>
+                        <p>Rack: {{item.rack_name}}</p>
+                        <ion-note [ngClass]="isItemInspectionCompleted(i,j)?'text_success':'text_danger'">
+                            Status: {{item.status_formatted}} <span *ngIf="item.defective_status"> - {{item.defective_status_formatted}}</span>
+                        </ion-note>
+                        <p>
+                            <button ion-button clear text-capitalize>Add Pics</button>
+                        </p>
+                        <p>
+                            <button ion-button color="secondary" icon-start round text-capitalize (click)="printItemLabel(item.r_item_id, i, j)"><ion-icon name="print"></ion-icon> Label</button>
+                        </p>
+                        <p>
+                            <ion-note class="text_danger" *ngIf="item.new_label_count > 0">Print Request(s): {{item.new_label_count}}.</ion-note>
+                        </p>
+                        <p>
+                            <ion-note class="text_danger" *ngIf="item.printed_label_count > 0">Label Printed: {{item.printed_label_count}} time(s).</ion-note>
+                        </p>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </ion-list>
+    </div>
 
-    <ion-item-group padding-top="0.5" no-padding>
-        <ion-list-header no-padding>
-            Inspection #1
-            <ion-icon class="toggle-btn-icon" [name]="isItemShown(i) ? 'ios-arrow-down' : 'ios-arrow-forward'"  [ngClass]="{active: isItemShown(i)}" item-end></ion-icon>
-        </ion-list-header>
-        <ion-item no-padding>
-            d
-        </ion-item>
-    </ion-item-group>
-
-
-
-    <button text-capitalize no-padding no-margin ion-button block icon-start (click)="beginInspection()" *ngIf="arrivalRecordDetails.record_status_formatted == receiveInRecordStatus.INSPECTION_IN_PROGRESS">
+    <button text-capitalize no-padding no-margin ion-button block icon-start (click)="beginInspection()" *ngIf="arrivalRecordDetails.record_status_code == receiveInRecordStatusCode.INSPECTION_IN_PROGRESS || arrivalRecordDetails.record_status_code == receiveInRecordStatusCode.INSPECTION_IN_PROGRESS_ATT_REQ">
         <ion-icon name="filing"></ion-icon>
         Resume Inspection
     </button>
-    <button text-capitalize no-padding no-margin ion-button block icon-start (click)="beginInspection()" *ngIf="arrivalRecordDetails.record_status_formatted == receiveInRecordStatus.INSPECTION_PENDING">
+    <button text-capitalize no-padding no-margin ion-button block icon-start (click)="beginInspection()" *ngIf="arrivalRecordDetails.record_status_code == receiveInRecordStatusCode.INSPECTION_PENDING">
         <ion-icon name="filing"></ion-icon>
         Begin Inspection
     </button>
     <ion-item no-padding no-lines padding-top="10">
-        <button ion-button clear icon-start item-start no-padding no-margin text-capitalize>
+        <button ion-button clear icon-start item-start no-padding no-margin text-capitalize (click)="printTempLabel()">
             <ion-icon name="print"></ion-icon>
-            Print Labels
+            Print Temp Labels
         </button>
         <button ion-button clear icon-start item-end no-padding no-margin text-capitalize>
             <ion-icon name="add-circle"></ion-icon>
             Add Images
         </button>
     </ion-item>
+
+    <p class="text_danger" *ngIf="recordNewLabelRequest">
+        {{recordNewLabelRequest}} Request(s) sent for Printing Temp Label.
+    </p>
+    <p class="text_danger" *ngIf="recordLabelPrinted">
+        Temp Label has been printed {{recordLabelPrinted}} time(s).
+    </p>
+
 </ion-content>

@@ -87,3 +87,15 @@ ion-label {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.text_success{
+  color : color($colors, secondary);
+}
+
+.text_warning{
+  color : color($colors, warning);
+}
+
+.text_danger{
+  color: color($colors,danger);
+}

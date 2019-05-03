@@ -3,6 +3,20 @@ page-receive-in-record-images {
   .scrollable{
     height: 200px;
   }
+  .item-inner {
+    padding-right: 0px !important;
+    border-bottom: 1px solid #dedede;
+  }
+  ion-scroll .scroll-content{
+    padding: 0px !important;
+  }
+  .checkmark-icon{
+    z-index: 2;
+    position: absolute;
+    left: 20%;
+    top: 2%;
+    margin: auto;
+  }
 
   ion-slides {
     display: block;
@@ -19,5 +33,23 @@ page-receive-in-record-images {
     pointer-events: none;
     margin-right: 20%;
     margin-left: 30%;
+  }
+
+  .img_list_header{
+    border-bottom: 1px solid;
+    font-weight: bold;
+  }
+
+  ion-footer{
+    .button{
+      background-color: #f4f4f4;
+    }
+
+    .item{
+      padding: 0px !important;
+    }
+    ion-label{
+      margin: 0px !important;
+    }
   }
 }

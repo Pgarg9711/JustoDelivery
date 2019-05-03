@@ -21,7 +21,7 @@
         <form novalidate [formGroup]="scanQRCodeForm" (ngSubmit)="viewInspectionDetails()">
             <ion-item class="litem_input">
                 <ion-input type="number" placeholder="Enter Record ID" formControlName="receiveInCode" min="1"></ion-input>
-                <button  ion-button item-end [navPush]="'QrScannerPage'" clear><img [src]="SCAN_BTN" alt="scan"></button>
+                <button  type="button" ion-button item-end [navPush]="'QrScannerPage'" clear><img [src]="SCAN_BTN" alt="scan"></button>
             </ion-item>
             <p class="has-error">{{ showError('receiveInCode') }}</p>
             <button ion-button full icon-start type="submit" class="submit_btn"><ion-icon name="search"></ion-icon>Search</button>

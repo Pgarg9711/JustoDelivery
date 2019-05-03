@@ -44,12 +44,12 @@ export class MyApp {
                 if(data){
                     console.log(data);
                     this.u_name = data.name;
-                    // this.rootPage = 'InspectItemPage';
-                    this.rootPage = 'DashboardPage';
+                    //this.rootPage = 'ReceiveInRecordImagesPage';
+                     this.rootPage = 'DashboardPage';
                 }
                 else{
-                    // this.rootPage = 'InspectItemPage';
-                    this.rootPage = 'SignInPage';
+                    //this.rootPage = 'ReceiveInRecordImagesPage';
+                     this.rootPage = 'SignInPage';
                 }
             });
         });

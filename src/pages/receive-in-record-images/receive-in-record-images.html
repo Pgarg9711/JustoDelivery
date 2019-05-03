@@ -7,36 +7,48 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding #RIRI>
-    <h3 *ngIf="imageLists.length == 0" text-center>Please Select Images!</h3>
-    <ion-item><img [src]="BG_IMG"></ion-item>
-    <ion-item-divider color="light" *ngIf="imageLists.length">
+    <ion-item-divider color="light" class="img_list_header transparent_background" no-padding no-margin>
         Selected Images
-        <a icon-start (click)="uploadImage(imageLists,1)" class="right"><ion-icon name="cloud-upload"></ion-icon>Upload</a>
+        <a icon-start (click)="uploadImage(imageLists,1)" class="right" >
+            <ion-icon name="cloud-upload"></ion-icon>Upload Selected
+        </a>
     </ion-item-divider>
     <ion-scroll class="h-300" scrollY="true">
-        <ion-list scroll="true">
-            <ion-item *ngFor="let img of imageLists; index as pos">
-                <ion-icon name="checkmark-circle"></ion-icon>
-                <ion-thumbnail item-start>
-                    <img src="{{img.readFileSrc}}" (click)="openGallery(imageLists, pos)"><!--<img [defaultImage]="defaultImg" [lazyLoad]="img.path" [scrollObservable]="RIRI.ionScroll">-->
-                </ion-thumbnail>
-                <ion-spinner item-end *ngIf="spinnerFlag == true"></ion-spinner>
-                <button ion-button clear item-end large (click)="deleteImage(img, pos)"><ion-icon name="trash"></ion-icon></button>
-            </ion-item>
-        </ion-list>
+        <ion-item text-center text-wrap no-lines *ngIf="imageLists.length == 0" no-padding no-margin no-lines>
+            <img [src]="BG_IMG">
+            <p>No Image(s) Selected yet for this Receive in Record!</p>
+        </ion-item>
+        <!--<ion-list scroll="true" *ngIf="imageLists.length" no-padding no-margin>-->
+        <!--<ion-list scroll="true" no-padding no-margin padding-top>-->
+            <!--&lt;!&ndash;<ion-item *ngFor="let img of imageLists; index as pos" no-padding no-margin>&ndash;&gt;-->
+            <!--<ion-item no-padding no-margin no-lines>-->
+                <!--<ion-icon name="checkmark-circle" color="secondary" class="checkmark-icon"></ion-icon>-->
+                <!--<ion-thumbnail item-start>-->
+                    <!--<img [src]="BG_IMG">-->
+                    <!--&lt;!&ndash;<img src="{{img.readFileSrc}}" (click)="openGallery(imageLists, pos)">&ndash;&gt;-->
+                <!--</ion-thumbnail>-->
+                <!--<ion-spinner item-end *ngIf="spinnerFlag == true"></ion-spinner>-->
+                <!--<button ion-button text-capitalize clear item-end  icon-start (click)="deleteImage(img, pos)" color="danger"><ion-icon name="trash"></ion-icon> Remove</button>-->
+            <!--</ion-item>-->
+        <!--</ion-list>-->
     </ion-scroll>
     <!--<button ion-button icon-start *ngIf="imageLists.length != 0" (click)="uploadImage(imageLists,1)"><ion-icon name="cloud-upload"></ion-icon>Upload</button>-->
-    <ion-item-group style="bottom: 25px;">
-        <div *ngIf="!uploadedImages.length && showSpinner" text-center>
+
+    <ion-item-group style="bottom: 25px;" no-padding no-margin>
+        <div *ngIf="!uploadedImages.length && showSpinner" text-center >
             <ion-spinner name="circles"></ion-spinner>
         </div>
-        <ion-item-divider color="light" *ngIf="!showSpinner">Uploaded Images</ion-item-divider>
-        <ion-item *ngIf="!uploadedImages.length && !showSpinner" no-lines>
-            <ion-note color="danger" text-wrap>
-                No image(s) uploaded yet for This Receive In Record!
-            </ion-note>
+        <ion-item-divider color="light" *ngIf="!showSpinner" class="img_list_header transparent_background" no-padding no-margin>
+            Uploaded Images
+        </ion-item-divider>
+
+        <!--If image not uploaded yet-->
+        <ion-item text-center text-wrap no-lines *ngIf="!uploadedImages.length && !showSpinner" no-padding no-margin margin-top="10" no-lines>
+            <img [src]="BG_IMG">
+            <p>No Image(s) Uploaded yet for this Receive in Record!</p>
         </ion-item>
 
+        <!--Uploaded Images-->
         <ion-slides #Slider  [slidesPerView]="3.2" [spaceBetween]="5">
             <ion-slide *ngFor="let img of uploadedImages; let i=index">
                 <ion-card style="width:100px; height:100px">
@@ -50,12 +62,12 @@
 
 
 <ion-footer no-padding no-margin no-border text-center align-items-center>
-    <ion-item>
+    <ion-item no-lines>
         <button class="footerBtns" clear text-center ion-button (click)="takePicture()" large>
             <ion-icon name="camera"></ion-icon>
         </button>
         <button class="footerBtns" clear text-center ion-button (click)="loadMultipleImageFromGallery()" large>
-            <ion-icon name="film"></ion-icon>
+            <ion-icon name="images"></ion-icon>
         </button>
     </ion-item>
 </ion-footer>

@@ -32,25 +32,27 @@ export class CommonProvider {
 
     // For Confirmation
     show_delete_confirm(title, subtitle) {
-        const confirm = this.alertCtrl.create({
-            title: title,
-            message: subtitle,
-            buttons: [
-                {
-                    text: 'Disagree',
-                    handler: () => {
-                        this.event.publish('DELETE_CONFIRM', false);
+        return new Promise((resolve, reject) => {
+            const confirm = this.alertCtrl.create({
+                title: title,
+                message: subtitle,
+                buttons: [
+                    {
+                        text: 'Disagree',
+                        handler: () => {
+                            return reject(true);
+                        }
+                    },
+                    {
+                        text: 'Agree',
+                        handler: () => {
+                            return resolve(true);
+                        }
                     }
-                },
-                {
-                    text: 'Agree',
-                    handler: () => {
-                        this.event.publish('DELETE_CONFIRM', true);
-                    }
-                }
-            ]
+                ]
+            });
+            confirm.present().catch(()=>{});
         });
-        confirm.present();
     }
 
     // For Displaying Basic Prompt

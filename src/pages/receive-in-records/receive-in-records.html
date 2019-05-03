@@ -56,11 +56,17 @@
         </ng-container>
         <ion-row>
             <ion-col col="6">
-                <button ion-button icon-start block (click)="add_images()" color="light"> <ion-icon name="add-circle" ></ion-icon> Add Images</button>
-            </ion-col>
-            <ion-col col="6">
                 <button ion-button icon-start block (click)="print_label()"> <ion-icon name="print"></ion-icon> Print Label</button>
             </ion-col>
+            <ion-col col="6">
+                <button ion-button icon-start block (click)="add_images()" color="light"> <ion-icon name="add-circle" ></ion-icon> Add Images</button>
+            </ion-col>
         </ion-row>
+        <p class="text_danger" *ngIf="recordNewLabelRequest">
+            {{recordNewLabelRequest}} Request(s) sent for Printing Temp Label.
+        </p>
+        <p class="text_danger" *ngIf="recordLabelPrinted">
+            Temp Label has been printed {{recordLabelPrinted}} time(s).
+        </p>
     </ion-item-group>
 </ion-content>
