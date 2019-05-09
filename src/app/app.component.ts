@@ -44,8 +44,8 @@ export class MyApp {
                 if(data){
                     console.log(data);
                     this.u_name = data.name;
-                    //this.rootPage = 'ReceiveInRecordImagesPage';
-                     this.rootPage = 'DashboardPage';
+                    this.rootPage = 'ReceiveInRecordImagesPage';
+                     // this.rootPage = 'DashboardPage';
                 }
                 else{
                     //this.rootPage = 'ReceiveInRecordImagesPage';

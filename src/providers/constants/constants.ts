@@ -18,9 +18,9 @@ export class ConstantsProvider {
 
 export enum SITE_URLS {
     PRINT_LABEL = 'https://crm.justodelivery.com/staging/public/warehouse/print/arrival/order/label/',
-    // API_URL = 'https://crm.justodelivery.com/staging/public/api/',
+    API_URL = 'https://crm.justodelivery.com/staging/public/api/',
     VERSION = 'v1',
-    API_URL = 'http://localhost:80/justodelivery/public/api/',
+    // API_URL = 'http://localhost:80/justodelivery/public/api/',
 }
 
 export enum VARS {

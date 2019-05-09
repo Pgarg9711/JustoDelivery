@@ -26,6 +26,7 @@ export class ReceiveInRecordsPage {
     recordLabelPrinted = 0;
     recordNewLabelRequest = 0;
     api_token = '';
+    WAREHOUSE_CODE = '';
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 public inspectionItemProvider: ItemsInspectionProvider,
@@ -33,12 +34,21 @@ export class ReceiveInRecordsPage {
                 public commonProvider: CommonProvider) {
         // Receive in Record id
         this.receive_in_record_data = this.navParams.get('data');   // data sent by Last page
+        console.log(this.receive_in_record_data);
+        if(this.receive_in_record_data && this.receive_in_record_data.warehouse_code){
+            this.WAREHOUSE_CODE  = '#'+this.receive_in_record_data.warehouse_code+this.receive_in_record_data.last_record_id;
+        }
         if(this.receive_in_record_data) {
+
+            // if(this.receive_in_record_data.warehouse_code){
+            //     this.WAREHOUSE_CODE  = '#'+this.receive_in_record_data.warehouse_code+this.receive_in_record_data.last_record_id;
+            // }
             this.REC_DETAILS = [
                 { name: 'Carrier', value: this.receive_in_record_data.carrier_name, open: 1},
                 { name: 'Reference', value: this.receive_in_record_data.tracking_number, open: 1},
                 { name: 'Qty of Pieces', value: this.receive_in_record_data.quantity, open: 1},
-                { name: 'Notes', value: this.receive_in_record_data.notes, open: 1}
+                { name: 'Notes', value: this.receive_in_record_data.notes, open: 1},
+
                 // { name: 'Notes', value: '', open: 1}
             ];
             // API token

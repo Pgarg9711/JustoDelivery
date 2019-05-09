@@ -14,6 +14,7 @@
     <ion-item-group no-padding>
         <ion-item no-lines no-padding class="heading">
             Receive in Record Details
+            <span *ngIf="WAREHOUSE_CODE"> - {{WAREHOUSE_CODE}}</span>
             <button item-end ion-button clear large no-padding (click)= "editRecord()">
                 <ion-icon name="create"></ion-icon>
             </button>
