@@ -48,8 +48,8 @@ export class MyApp {
                      // this.rootPage = 'DashboardPage';
                 }
                 else{
-                    //this.rootPage = 'ReceiveInRecordImagesPage';
-                     this.rootPage = 'SignInPage';
+                    this.rootPage = 'ReceiveInRecordImagesPage';
+                     //this.rootPage = 'SignInPage';
                 }
             });
         });

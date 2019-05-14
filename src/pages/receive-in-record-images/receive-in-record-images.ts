@@ -240,9 +240,9 @@ export class ReceiveInRecordImagesPage {
     // Delete Image From Selected Image List
     deleteImage(imgEntry, position) {
         this.imageLists.splice(position, 1);
-        if(imgEntry && imgEntry != undefined){
-            var correctPath = imgEntry.path;
-            if(correctPath && correctPath != undefined){
+        if(imgEntry){
+            let correctPath = imgEntry.path;
+            if(correctPath){
                 this.file.removeFile(correctPath, imgEntry.name);
             }
         }
@@ -251,45 +251,37 @@ export class ReceiveInRecordImagesPage {
     // Uploading File using "FileTransfer"
     // Param: File Object, flag = 0 for camera, flag = 1 for gallery
     uploadImage(file, flag) {
-        return new Promise(resolve => {
-                console.log(file);
-                file.spinner = true;
-                var url = SITE_URLS.API_URL+SITE_URLS.VERSION+"/save/arrival/images";
-                var targetPath = file.path + file.name;
-                var filename = file.name;
-                let options: FileUploadOptions = {
-                    fileKey: "arrival_images",
-                    fileName: filename,
-                    chunkedMode: false,
-                    mimeType: "multipart/form-data",
-                    params: {
-                        'fileName': filename,
-                        'user_api_token': this.user_api_token,
-                        'receive_in_records_id': this.receive_in_record_data.last_record_id
-                    }
-                };
-                const fileTransfer: FileTransferObject = this.transfer.create();
-                fileTransfer.upload(targetPath, url, options).then(data => {
-                    var response = JSON.parse(data.response);
-                    console.log('Response', response);
-                    if (response.status == true) {      // If image Uploaded Adding to ImgUploaded Variable
-                        if (flag == 1) {    // images from gallery have to remove
-                            this.deleteImage(file, 0);
-                        }
-                        // this.event.publish('JTD_ON_UPLOAD_IMG', this.data);
-                        this.getSavedImages(this.data);
-                    } else {
-                        file.spinner = false;
-                        // this.getSavedImages(this.data);
-
-                    }
-
-                    return resolve(response);
-                }).catch((err) => {
-                    file.spinner = false;
-                    return resolve(err);
-                });
-            });
+      file.spinner = true;
+      let url = SITE_URLS.API_URL+SITE_URLS.VERSION+"/save/arrival/images";
+      let options: FileUploadOptions = {
+        fileKey: "arrival_images",
+        fileName: file.name,
+        chunkedMode: false,
+        mimeType: "multipart/form-data",
+        params: {
+          fileKey: "arrival_images",
+          fileName: file.name,
+          receive_in_records_id: this.receive_in_record_data.last_record_id,
+          user_api_token : this.user_api_token
+        }
+      };
+      return new Promise((resolve, reject) => {
+        const fileTransfer: FileTransferObject = this.transfer.create();
+        fileTransfer.upload(file.fileTarget, url, options).then((res:any) => {
+          let newRes:any = JSON.parse(res.response);
+          if(newRes.status){
+            if (flag == 1) { this.deleteImage(file, 0); }
+            this.getSavedImages(this.data);
+          } else{
+            file.spinner = false;
+          }
+          console.log('newRes',newRes);
+          return resolve(newRes);
+        }, (err) => {
+          file.spinner = false;
+          return reject(err);
+        });
+      });
     }
 
 }
