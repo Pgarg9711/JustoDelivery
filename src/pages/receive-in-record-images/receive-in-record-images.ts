@@ -1,18 +1,16 @@
-import {Component, ChangeDetectorRef, ViewChild, NgZone} from '@angular/core';
-import {
-     Content, Events, IonicPage, NavController, NavParams, Platform, Slides, ModalController
-} from 'ionic-angular';
+import {ChangeDetectorRef, Component, NgZone, ViewChild} from '@angular/core';
+import {Content, Events, IonicPage, ModalController, NavController, NavParams, Platform, Slides} from 'ionic-angular';
 
-import { File } from '@ionic-native/file';
-import {FileUploadOptions, Transfer, TransferObject} from '@ionic-native/transfer';
-import { FilePath } from '@ionic-native/file-path';
-import { CameraOptions, Camera } from "@ionic-native/camera";
-import { AuthProvider } from "../../providers/auth/auth";
-import { ReceiveInRecordsProvider } from "../../providers/receive-in-records/receive-in-records";
-import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker';
+import {File} from '@ionic-native/file';
+import {FileTransfer, FileTransferObject, FileUploadOptions} from '@ionic-native/file-transfer';
+import {FilePath} from '@ionic-native/file-path';
+import {Camera, CameraOptions} from "@ionic-native/camera";
+import {AuthProvider} from "../../providers/auth/auth";
+import {ReceiveInRecordsProvider} from "../../providers/receive-in-records/receive-in-records";
+import {ImagePicker, ImagePickerOptions} from '@ionic-native/image-picker';
 import {CommonProvider} from "../../providers/common/common";
-import { GalleryModal } from 'ionic-gallery-modal';
-import {IMG} from "../../providers/constants/constants";
+import {GalleryModal} from 'ionic-gallery-modal';
+import {IMG, SITE_URLS} from "../../providers/constants/constants";
 
 /**
  * Generated class for the ReceiveInRecordImagesPage page.
@@ -45,7 +43,7 @@ export class ReceiveInRecordImagesPage {
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private camera: Camera,
-                private transfer: Transfer,
+                private transfer: FileTransfer,
                 private file: File,
                 private filePath: FilePath,
                 public platform: Platform,
@@ -216,7 +214,9 @@ export class ReceiveInRecordImagesPage {
                 fileTarget  : imagePath,
                 name    : imagePath.substr(imagePath.lastIndexOf('/') + 1),
                 path    : imagePath.substr(0, imagePath.lastIndexOf('/') + 1),
-                readFileSrc :  (<any>window).Ionic.WebView.convertFileSrc(imagePath)
+                readFileSrc :  (<any>window).Ionic.WebView.convertFileSrc(imagePath),
+                spinner : false,
+                id: 'upload_btn_'+imagePath.substr(imagePath.lastIndexOf('/') + 1),
             }];
             console.log('file', file[0].readFileSrc);
             console.log('file', file[0].fileTarget);
@@ -224,11 +224,13 @@ export class ReceiveInRecordImagesPage {
             console.log('file', file[0].path);
 
             if(file.length){
-                this.uploadImage(file[0], 0).then((res: any)=>{
-                    if(res){
-                        this.commonProvider.show_basic_alert('Success','Image Uploaded Successfully');
-                    }
-                });
+
+                this.imageLists.push(file[0]);
+                // this.uploadImage(file[0], 0).then((res: any)=>{
+                //     if(res){
+                //         this.commonProvider.show_basic_alert('Success','Image Uploaded Successfully');
+                //     }
+                // });
             } else{
                 console.log('Image not Found');
             }
@@ -250,8 +252,9 @@ export class ReceiveInRecordImagesPage {
     // Param: File Object, flag = 0 for camera, flag = 1 for gallery
     uploadImage(file, flag) {
         return new Promise(resolve => {
+                console.log(file);
                 file.spinner = true;
-                var url = "https://crm.justodelivery.com/staging/public/api/v1/save/arrival/images";
+                var url = SITE_URLS.API_URL+SITE_URLS.VERSION+"/save/arrival/images";
                 var targetPath = file.path + file.name;
                 var filename = file.name;
                 let options: FileUploadOptions = {
@@ -265,9 +268,7 @@ export class ReceiveInRecordImagesPage {
                         'receive_in_records_id': this.receive_in_record_data.last_record_id
                     }
                 };
-
-                console.log('dfdfd');
-                const fileTransfer: TransferObject = this.transfer.create();
+                const fileTransfer: FileTransferObject = this.transfer.create();
                 fileTransfer.upload(targetPath, url, options).then(data => {
                     var response = JSON.parse(data.response);
                     console.log('Response', response);

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import {  Injectable} from '@angular/core';
 import { CameraOptions, Camera } from "@ionic-native/camera";
-import { Transfer, TransferObject } from "@ionic-native/transfer";
+import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer";
 import {CommonProvider} from "../common/common";
 import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker";
 import {ModalController} from "ionic-angular";
@@ -19,7 +19,7 @@ export class CameraProvider {
   imageLists : any;
   constructor(public http: HttpClient,
               public camera: Camera,
-              private transfer: Transfer,
+              private transfer: FileTransfer,
               private imagePicker: ImagePicker,
               public commonProvider: CommonProvider,
               public modalCtrl: ModalController) {
@@ -77,7 +77,7 @@ export class CameraProvider {
         params: uploadParams
       };
 
-      const fileTransfer: TransferObject = this.transfer.create();
+      const fileTransfer: FileTransferObject = this.transfer.create();
 
       // Use the FileTransfer to upload the image
       fileTransfer.upload(targetPath, url, options).then(data => {

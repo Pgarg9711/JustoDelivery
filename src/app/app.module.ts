@@ -13,11 +13,10 @@ import { AuthProvider } from '../providers/auth/auth';
 import { ConstantsProvider } from '../providers/constants/constants';
 import { CommonProvider } from '../providers/common/common';
 import { ReceiveInRecordsProvider } from '../providers/receive-in-records/receive-in-records';
-
 import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
-import { FilePath } from '@ionic-native/file-path';
-import { Transfer } from '@ionic-native/transfer';
+import {FilePath} from "@ionic-native/file-path";
+import { FileTransfer } from "@ionic-native/file-transfer";
 import { ImagePicker } from '@ionic-native/image-picker';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import * as ionicGalleryModal from 'ionic-gallery-modal';
@@ -59,8 +58,8 @@ import { IonicSelectableModule } from 'ionic-selectable';
     ReceiveInRecordsProvider,
     Camera,
     File,
-    FilePath,
-    Transfer,
+      FilePath,
+    FileTransfer,
     ImagePicker,
     WebView,
     QRScanner,
